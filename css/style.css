@@ -5,21 +5,12 @@
     
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-
-    margin-top: 300px;
-}
-
-
+/* slider */
 #slider {
     position: relative;
 
     height: 500px;
-
-    border: 6px solid gray;
-    border-radius: 24px;
+    padding: 0;
 
     overflow: hidden;
 }
@@ -89,4 +80,17 @@ figure:not(.active) {
 
     transform: scale(1.2);
 }
+/* fine slider */
 
+/* thumbnails */
+.thumbnails-list {
+    height: 500px;
+    padding: 0;
+}
+
+.thumbnails-list img {
+    width: 100%;
+    height: calc(100% / 5);
+    object-fit: cover;
+}
+/* fine thumbnails */

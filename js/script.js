@@ -67,6 +67,18 @@ images.forEach(element => {
             carouselImageElement.src = "./" + element.image;
             carouselElement.append(carouselImageElement);
 
+            // aggiungo thumbnails
+            const ThumbnailListElement = document.querySelector(".thumbnails-list");
+            console.log(ThumbnailListElement);
+            const ThumbnaillImageElement = document.createElement("img");
+            ThumbnaillImageElement.src = "./" + element.image;
+            ThumbnailListElement.append(ThumbnaillImageElement);
+
+            // al click della thumbnail cambio l'immmagine visualizzata
+            ThumbnaillImageElement.addEventListener('click', function() {
+                
+            })
+
         } else {
             const carouselDetailElement = document.createElement("div");
             carouselDetailElement.innerText = element[key];
