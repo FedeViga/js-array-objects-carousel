@@ -13,6 +13,8 @@
     padding: 0;
 
     overflow: hidden;
+
+    border-right: 4px solid #6c757d;
 }
 
 figure {
@@ -30,8 +32,14 @@ figure .details {
     position: absolute;
     color: white;
     bottom: 40px;
-    right: 20px;
+    right: 0px;
     text-align: right;
+    padding: 0px 20px;
+}
+
+.details mark {
+    background-color: #00000079;
+    color: white;
 }
 
 figure .title {
@@ -41,6 +49,7 @@ figure .title {
 
 figure .text {
     font-size: 14px;
+    line-height: 2em;
 }
 
 figure:not(.active) {
@@ -86,11 +95,16 @@ figure:not(.active) {
 .thumbnails-list {
     height: 500px;
     padding: 0;
+    background-color: black;
 }
 
 .thumbnails-list img {
     width: 100%;
     height: calc(100% / 5);
     object-fit: cover;
+}
+
+.thumbnails-list img:not(.thumbnail-active) {
+    opacity: .2;
 }
 /* fine thumbnails */

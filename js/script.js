@@ -24,7 +24,7 @@ Aggiungere bottoni di start / stop e di inversione del meccanismo di autoplay.
 const images = [
     {
         image: 'img/01.webp',
-        title: 'Marvel\'s Spiderman Miles Morale',
+        title: 'Marvel\'s Spiderman Miles Morales',
         text: 'Experience the rise of Miles Morales as the new hero masters incredible, explosive new powers to become his own Spider-Man.',
     }, {
         image: 'img/02.webp',
@@ -49,8 +49,11 @@ const images = [
 // bersagliamo lo slider
 const sliderElement = document.getElementById("slider");
 
+// -  salvo un contatore della slide
+let slideNumber = 1;
+
 // creo forEach per visualizzare in pagina le immagini con titolo e descrizione
-images.forEach(element => {
+images.forEach((element, index) => {
 
     const carouselElement = document.createElement("figure");
     sliderElement.append(carouselElement);
@@ -58,9 +61,11 @@ images.forEach(element => {
     const carouselDetailListElement = document.createElement("div");
     carouselDetailListElement.classList.add("details");
     carouselElement.append(carouselDetailListElement);
+
     // per ogni ogetto dell'array aggiungo l'immagine, il titolo e la descrizione
     for (let key in element) {
 
+        // creo immagine e thumbnail
         if (key == "image") {
 
             const carouselImageElement = document.createElement("img");
@@ -70,18 +75,31 @@ images.forEach(element => {
             // aggiungo thumbnails
             const ThumbnailListElement = document.querySelector(".thumbnails-list");
             console.log(ThumbnailListElement);
-            const ThumbnaillImageElement = document.createElement("img");
-            ThumbnaillImageElement.src = "./" + element.image;
-            ThumbnailListElement.append(ThumbnaillImageElement);
+            const ThumbnailImageElement = document.createElement("img");
+            ThumbnailImageElement.src = "./" + element.image;
+            ThumbnailListElement.append(ThumbnailImageElement);
 
             // al click della thumbnail cambio l'immmagine visualizzata
-            ThumbnaillImageElement.addEventListener('click', function() {
-                
+            ThumbnailImageElement.addEventListener('click', function() {
+
+                // rendo active la thumbnail selezionata
+                for (let i = 0; i < images.length; i++) {
+                    document.querySelector(`.thumbnails-list img:nth-of-type(${i + 1})`).classList.remove("thumbnail-active");
+                    document.querySelector(`figure:nth-of-type(${i + 1})`).classList.remove("active");
+    
+                }
+                this.classList.add("thumbnail-active");
+
+                // rendo active l'immagine corrispondente all thumb
+                slideNumber = index + 1;
+                document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.add("active");
+
             })
 
+        // creo titolo e descrizione
         } else {
             const carouselDetailElement = document.createElement("div");
-            carouselDetailElement.innerText = element[key];
+            carouselDetailElement.innerHTML = `<mark>${element[key]}</mark>`;
             carouselDetailElement.className = key;
             carouselDetailListElement.append(carouselDetailElement);
 
@@ -93,6 +111,9 @@ images.forEach(element => {
 // rendo attiva la prima immagine
 document.querySelector("figure:nth-of-type(1)").classList.add("active");
 
+// rendo attiva la prima thumbnail
+document.querySelector(".thumbnails-list img:nth-of-type(1)").classList.add("thumbnail-active");
+
 /*
 -  salvo un contatore della slide
 -  QUANDO premo la freccia SU
@@ -102,11 +123,8 @@ document.querySelector("figure:nth-of-type(1)").classList.add("active");
 */
 
 
-// -  salvo un contatore della slide
-let slideNumber = 1;
-
-// -  QUANDO premo la freccia SU
-document.querySelector("#up-arrow").addEventListener("click", function() {
+// -  QUANDO premo la freccia GIU
+document.querySelector("#down-arrow").addEventListener("click", function() {
 
 
     if (slideNumber < images.length) {
@@ -114,11 +132,16 @@ document.querySelector("#up-arrow").addEventListener("click", function() {
         // - prendo l'immagine attuale e le rimuovo la classe "active"  
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.remove("active");
 
+        // tolgo l'active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.remove("thumbnail-active");
         // - aumento il contatore di 1
         slideNumber++;
 
         // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.add("active");
+
+        // aggiungo active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
 
         console.log(slideNumber);
 
@@ -126,6 +149,9 @@ document.querySelector("#up-arrow").addEventListener("click", function() {
 
         // - prendo l'immagine attuale e le rimuovo la classe "active"  
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.remove("active");
+
+        // tolgo l'active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.remove("thumbnail-active");
 
         // resetto la variabile che mi conta l'immagine a cui sono arrivato
         slideNumber = 1;
@@ -133,23 +159,32 @@ document.querySelector("#up-arrow").addEventListener("click", function() {
         // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.add("active");
 
+        // aggiungo active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
+
     }
 
         
 });
 
-
-document.querySelector("#down-arrow").addEventListener("click", function() {
+// -  QUANDO premo la freccia SU
+document.querySelector("#up-arrow").addEventListener("click", function() {
 
     if (slideNumber > 1) {
         // - prendo l'immagine attuale e le rimuovo la classe "active"  
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.remove("active");
+
+        // tolgo l'active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.remove("thumbnail-active");
 
         // - diminuisco il contatore di 1
         slideNumber--;
 
         // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.add("active");
+
+        // aggiungo active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
 
         console.log(slideNumber);
 
@@ -158,11 +193,17 @@ document.querySelector("#down-arrow").addEventListener("click", function() {
         // - prendo l'immagine attuale e le rimuovo la classe "active"  
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.remove("active");
 
+        // tolgo l'active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.remove("thumbnail-active");
+
         // - metto il valore di slideNumebr = alla posizione dell'ultima immagine
         slideNumber = images.length;
 
         // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
         document.querySelector(`figure:nth-of-type(${slideNumber})`).classList.add("active");
+
+        // aggiungo active alla thumbnail
+        document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
 
     }
     
