@@ -74,7 +74,6 @@ images.forEach((element, index) => {
 
             // aggiungo thumbnails
             const ThumbnailListElement = document.querySelector(".thumbnails-list");
-            console.log(ThumbnailListElement);
             const ThumbnailImageElement = document.createElement("img");
             ThumbnailImageElement.src = "./" + element.image;
             ThumbnailListElement.append(ThumbnailImageElement);
@@ -114,14 +113,6 @@ document.querySelector("figure:nth-of-type(1)").classList.add("active");
 // rendo attiva la prima thumbnail
 document.querySelector(".thumbnails-list img:nth-of-type(1)").classList.add("thumbnail-active");
 
-/*
--  salvo un contatore della slide
--  QUANDO premo la freccia SU
-    - prendo l'immagine attuale e le rimuovo la classe "active"  
-    - aumento il contatore di 1
-    - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-*/
-
 
 // -  QUANDO premo la freccia GIU
 document.querySelector("#down-arrow").addEventListener("click", function() {
@@ -133,12 +124,54 @@ document.querySelector("#up-arrow").addEventListener("click", function() {
     showUp();
 });
 
-// setInterval per la riproduzione automatica delle slide
-const timer = setInterval(function() {
-    showDown();
-}, 3000)
 
+let timer;
 
+// addeventlistener per la riproduzione automatica delle slide al click del bottone
+const playButtonElement = document.querySelector("#play-button");
+
+playButtonElement.addEventListener('click', function() {
+
+    playButtonElement.classList.add("active");
+    reverseButtonElement.classList.remove("active");
+    pauseButtonElement.classList.remove("active");
+
+    clearInterval(timer);
+
+    timer = setInterval(function() {
+        showDown();
+    }, 3000)
+
+})
+
+// addeventlistener per stoppare la riproduzione automatica delle slide al click del bottone
+const pauseButtonElement = document.querySelector("#pause-button");
+
+pauseButtonElement.addEventListener('click', function() {
+
+    playButtonElement.classList.remove("active");
+    reverseButtonElement.classList.remove("active");
+    pauseButtonElement.classList.add("active");
+
+    clearInterval(timer);
+})
+
+// addeventlistener per la riproduzione automatica invertita delle slide al click del bottone
+const reverseButtonElement = document.querySelector("#reverse-button");
+
+reverseButtonElement.addEventListener('click', function() {
+
+    playButtonElement.classList.remove("active");
+    reverseButtonElement.classList.add("active");
+    pauseButtonElement.classList.remove("active");
+
+    clearInterval(timer);
+
+    timer = setInterval(function() {
+        showUp();
+    }, 3000)
+
+})
 
 
 
@@ -152,6 +185,7 @@ function showDown () {
 
         // tolgo l'active alla thumbnail
         document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.remove("thumbnail-active");
+
         // - aumento il contatore di 1
         slideNumber++;
 
@@ -160,8 +194,6 @@ function showDown () {
 
         // aggiungo active alla thumbnail
         document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
-
-        console.log(slideNumber);
 
     } else {
 
@@ -201,8 +233,6 @@ function showUp () {
 
         // aggiungo active alla thumbnail
         document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
-
-        console.log(slideNumber);
 
     } else {
 
