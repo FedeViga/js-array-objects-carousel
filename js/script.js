@@ -125,7 +125,25 @@ document.querySelector(".thumbnails-list img:nth-of-type(1)").classList.add("thu
 
 // -  QUANDO premo la freccia GIU
 document.querySelector("#down-arrow").addEventListener("click", function() {
+    showDown();
+});
 
+// -  QUANDO premo la freccia SU
+document.querySelector("#up-arrow").addEventListener("click", function() {
+    showUp();
+});
+
+// setInterval per la riproduzione automatica delle slide
+const timer = setInterval(function() {
+    showDown();
+}, 3000)
+
+
+
+
+
+// funzione per scorrere in giù le immagini
+function showDown () {
 
     if (slideNumber < images.length) {
 
@@ -163,12 +181,10 @@ document.querySelector("#down-arrow").addEventListener("click", function() {
         document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
 
     }
+}
 
-        
-});
-
-// -  QUANDO premo la freccia SU
-document.querySelector("#up-arrow").addEventListener("click", function() {
+// funzione per scorrere in su le immagini
+function showUp () {
 
     if (slideNumber > 1) {
         // - prendo l'immagine attuale e le rimuovo la classe "active"  
@@ -206,7 +222,4 @@ document.querySelector("#up-arrow").addEventListener("click", function() {
         document.querySelector(`.thumbnails-list img:nth-of-type(${slideNumber})`).classList.add("thumbnail-active");
 
     }
-    
-
-
-});
+}
